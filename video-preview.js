@@ -3,19 +3,18 @@ function initVideoPreview(selector, options) {
 		cors: false,
 		loop: true,
 		muted: true,
-		preload: 'auto',
-		autoplay: false
+		autoplay: false,
+		preload: 'auto'
 	}, options);
 
-	function wrapVideo(srcVideo) {
-		var video = document.createElement('video');
-		video.innerHTML = srcVideo.innerHTML;
+	function wrapVideo(video) {
 		video._playing = false;
 
 		var opts = {
 			loop: options.loop,
 			muted: options.muted,
 			crossorigin: options.cors,
+			autoplay: options.autoplay,
 			playsinline: 1,
 			controls: 0
 		};
@@ -25,7 +24,7 @@ function initVideoPreview(selector, options) {
 		});
 
 		['width', 'height', 'class'].forEach(function(a) {
-			var value = srcVideo.getAttribute(a);
+			var value = video.getAttribute(a);
 			if(value)
 				video.setAttribute(a, value);
 		});
@@ -39,9 +38,9 @@ function initVideoPreview(selector, options) {
 
 		var container = document.createElement('div');
 		container.classList.add('video-preview-container');
+		video.parentNode.replaceChild(container, video);
 		container.appendChild(video);
 		container.appendChild(controls);
-		srcVideo.parentNode.replaceChild(container, srcVideo);
 
 		var progressBar = container.querySelector('.controls .progress-bar');
 
@@ -60,9 +59,8 @@ function initVideoPreview(selector, options) {
 
 			if(result && typeof result.then === 'function') {
 				result.then(_afterPlay)
-				.catch(function(error) {
+				.catch(function(error) { // video wouldn't play until user interaction in Chrome, thanks google :(
 					console.warn('state?', video.readyState);
-					setTimeout(video._play, 100); //weird behaviour that drops a DOMException sometimes, probably will investigate later
 				});
 			}
 			else
