@@ -2,7 +2,7 @@
 
 A minimalistic approach for cool animated things on web pages that will not upset people with uncontrolled annoying animation.
 
-[Demo](https://lolwhoami.github.io/video-preview/example/) | [Example](./docs/index.html)
+[Demo](https://lolwhoami.github.io/video-preview/example/index.html) | [Example](./docs/index.html)
 
 > We needed a way to show short videos for different features of our plugins, so I decided first to create short GIFs, which appeared to be a dumb way. Too heavy, bad quality, uncontrollable, etc. So then I tried to find a simple HTML5 video player JS library without controls, but with a progress indicator and which would launch the video when mouse was hovering over it. And it appeared that there was no such thing on the Internet. Or maybe I just didn't know how to google it right. Anyway, now there's at least one such library. Enjoy.
 
