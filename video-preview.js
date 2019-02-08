@@ -2,7 +2,9 @@ function initVideoPreview(selector, options) {
 	options = Object.assign({
 		cors: false,
 		loop: true,
-		muted: true
+		muted: true,
+		preload: 'auto',
+		autoplay: false
 	}, options);
 
 	function wrapVideo(srcVideo) {
@@ -49,26 +51,54 @@ function initVideoPreview(selector, options) {
 		}
 
 		video._play = function() {
-			video.play();
-			video._playing = true;
-			container.classList.add('playing');
+			var _afterPlay = function() {
+				video._playing = true;
+				container.classList.add('playing');
+			}
+
+			var result = video.play();
+
+			if(result && typeof result.then === 'function') {
+				result.then(_afterPlay)
+				.catch(function(error) {
+					console.warn('state?', video.readyState);
+					setTimeout(video._play, 100); //weird behaviour that drops a DOMException sometimes, probably will investigate later
+				});
+			}
+			else
+				_afterPlay();
 		}
 
 		video._stop = function() {
-			video.pause();
-			video.currentTime = 0;
-			video._playing = false;
-			container.classList.remove('playing');
+			var _afterStop = function() {
+				video.currentTime = 0;
+				video._playing = false;
+				container.classList.remove('playing');
+			}
+
+			var result = video.pause();
+
+			if(result && typeof result.then === 'function')
+				result.then(_afterStop)
+			else
+				_afterStop();
 		}
 
 		video._togglePlay = function() {
 			video._playing ? video._stop() : video._play();
 		}
 
+		video._toggleLoadingState = function(flag) {
+			video._loading = flag;
+			return flag ? container.classList.add('loading') : container.classList.remove('loading');
+		}
+		video._toggleLoadingState(true);
+
 		container.addEventListener('mouseover', video._play);
 		container.addEventListener('mouseout', video._stop);
 		container.addEventListener('click', video._togglePlay);
 		video.addEventListener('timeupdate', video._updateProgress);
+		video.addEventListener('canplaythrough', function() { video._toggleLoadingState(false); });
 
 		return container;
 	}

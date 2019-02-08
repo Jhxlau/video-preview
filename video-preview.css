@@ -64,3 +64,6 @@
 	transition: .5s opacity;
 	opacity: 0;
 }
+.video-preview-container.loading {
+	cursor: wait;
+}
