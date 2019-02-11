@@ -37,6 +37,7 @@
 	border: 2px solid rgb(200, 200, 200);
 	border-radius: 50%;
 	animation: 2s infinite alternate preview-video-player-button-blink;
+	cursor: pointer;
 }
 .video-preview-container .controls .play-button::after {
 	flex-basis: 1;
