@@ -34,9 +34,9 @@
 	bottom: 15px;
 	height: 25px;
 	width: 25px;
-	border: 2px solid rgb(200, 200, 200);
+	border: 2px solid rgb(220, 220, 220);
 	border-radius: 50%;
-	animation: 2s infinite alternate preview-video-player-button-blink;
+	animation: 1s infinite alternate preview-video-player-button-blink;
 	cursor: pointer;
 }
 .video-preview-container .controls .play-button::after {
@@ -47,18 +47,18 @@
 	font-family: arial !important;
 	font-size: 15px;
 	line-height: 15px;
-	color: rgb(200, 200, 200);
-	animation: 2s infinite alternate preview-video-player-button-blink;
+	color: rgb(220, 220, 220);
+	animation: 1s infinite alternate preview-video-player-button-blink;
 }
 @keyframes preview-video-player-button-blink {
 	0% {
-		border-color: rgba(200, 200, 200, 1);
-		color: rgba(200, 200, 200, 1);
+		border-color: rgba(220, 220, 220, 1);
+		color: rgba(220, 220, 220, 1);
 	}
 
 	100% {
-		border-color: rgba(200, 200, 200, .5);
-		color: rgba(200, 200, 200, .5);
+		border-color: rgba(220, 220, 220, .2);
+		color: rgba(220, 220, 220, .2);
 	}
 }
 .video-preview-container.playing .play-button {
